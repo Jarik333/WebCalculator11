@@ -4,14 +4,16 @@ using EFDataApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace WebCalculator1.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20211129115519_RemoveResult")]
+    partial class RemoveResult
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,9 +42,6 @@ namespace WebCalculator1.Migrations
 
                     b.Property<string>("IP")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Result")
-                        .HasColumnType("float");
 
                     b.HasKey("ID");
 

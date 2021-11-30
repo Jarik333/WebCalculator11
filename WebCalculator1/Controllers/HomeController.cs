@@ -7,10 +7,10 @@ using EFDataApp.Models;
 using UAParser;
 using Microsoft.AspNetCore.Http;
 using PagedList;
-using System.Net.Sockets;
-using System.Net;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using WebCalculator1.Models;
 using Microsoft.AspNetCore.Authorization;
-using AuthApp.ViewModels;
 
 namespace EFDataApp.Controllers
 {
@@ -31,6 +31,7 @@ namespace EFDataApp.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            
             return View();
         }
         
@@ -49,6 +50,8 @@ namespace EFDataApp.Controllers
             DateTime now = DateTime.Now;
             operation.Date = now;
 
+       
+
             db.Operations.Add(operation);
        
             
@@ -61,21 +64,21 @@ namespace EFDataApp.Controllers
                 {
                    
                     ViewData["Message"] = $"Ответ: {result}";
-                    operation.Result = $"Ответ: {result}";
+                    operation.Result = result;
                     operation.Error = "-";
                 }
                 else
                 {
                     ViewData["Message"] = "Ошибка: попытка деления на 0";
                     operation.Error = "Попытка деления на 0";
-                    operation.Result = "Не получен";
+                   
                 }
             }
             catch (System.FormatException)
             {
                 ViewData["Message"] = "Ошибка: неверный формат ввода";
                 operation.Error = "Неверный формат ввода";
-                operation.Result = "Не получен";
+                
             }
 
             db.SaveChangesAsync();
@@ -96,6 +99,99 @@ namespace EFDataApp.Controllers
 
             
         }
-    }
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? ID)
+        {
+            if (ID != null)
+            {
+                Operation operation = await db.Operations.FirstOrDefaultAsync(p => p.ID == ID);
+                if (operation != null)
+                {
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        return View(operation);
+                    }
+                    else
+                    {
+                        return View("Index");
+                    }
+                }
+                   
+            }
+            return NotFound();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(Operation operation)
+        {
+            db.Operations.Update(operation);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Info");
+        }
+        [HttpGet]
+        [ActionName("Delete")]
+        public async Task<IActionResult> ConfirmDelete(int? ID)
+        {
+            if (ID != null)
+            {
+                Operation operation = await db.Operations.FirstOrDefaultAsync(p => p.ID == ID);
+                if (operation != null)
+                {
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        return View(operation);
+                    }
+                    else
+                    {
+                        return View("Index");
+                    }
+                }
+                   
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int? ID)
+        {
+            if (ID != null)
+            {
+                Operation operation = await db.Operations.FirstOrDefaultAsync(p => p.ID == ID);
+                if (operation != null)
+                {
+                    db.Operations.Remove(operation);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Info");
+                }
+            }
+            return NotFound();
+        }
+        [HttpGet]
+    
+        public ViewResult Add()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else {
+                return View("Index");
+            }
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add(string Expression, double Result, DateTime Date, string Error,string Browser,string IP, Operation operation)
+        {
+            operation.Expression = Expression;
+            operation.Result = Result;
+            operation.Date = Date;
+            operation.Error = Error;
+            operation.Browser = Browser;
+            operation.IP = IP;
+            db.Operations.Add(operation);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Info");
+        }
+
+    }              
 }
 

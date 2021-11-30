@@ -12,7 +12,7 @@ namespace EFDataApp.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { set; get; }
         public string Expression { set; get; }
-        public string Result { set; get; }
+        public double Result { set; get; }
         public DateTime Date { set; get; }
         public string IP { set; get; }
         public string Browser { set; get; }
