@@ -5,12 +5,16 @@
 }
 <table class="table table-bordered">
     @{
-            <tr><td>Дата/Время</td><td>Введенное выражение</td><td>Результат</td><td>Хост</td><td>Браузер</td><td>Ошибка</td><td>ID</td></tr>
+      
+        <tr> <td><a asp-action="Add" asp-controller="Home">Добавить</a></td></tr>
+        <tr><td>Дата/Время</td><td>Введенное выражение</td><td>Результат</td><td>Хост</td><td>Браузер</td><td>Ошибка</td><td>ID</td></tr>
         foreach (var s in Model)
         {
-           
-            
-            <tr><td>@s.Date</td><td>@s.Expression</td><td>@s.Result</td><td>@s.IP</td><td>@s.Browser</td><td>@s.Error</td><td>@s.ID</td></tr>
+
+
+            <tr><td>@s.Date</td><td>@s.Expression</td><td>@s.Result</td>//<td>@s.IP</td><td>@s.Browser</td><td>@s.Error</td><td>@s.ID</td></tr>
+            <tr><td><a asp-action="Edit" asp-controller="Home" asp-route-id="@s.ID">Изменить</a></td><td><a asp-action="Delete" asp-controller="Home" asp-route-id="@s.ID">Удалить</a></td></tr>
+
 
         }
     }
