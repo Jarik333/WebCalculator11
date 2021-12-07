@@ -18,6 +18,7 @@ namespace AuthApp.Controllers
         {
             db = context;
         }
+
         [HttpGet]
         public IActionResult Login()
         {
