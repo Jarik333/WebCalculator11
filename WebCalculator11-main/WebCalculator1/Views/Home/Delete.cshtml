@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Удаление пользователя";
 }
-
+<h2>Удаление строки из базы данных</h2>
 <div>
     <dl class="dl-horizontal">
         <dt>Выражение</dt>
@@ -17,10 +17,12 @@
     </dl>
 
     <div>
+        <span class="alert-info">Вы уверены, что хотите удалить строку операции?</span>
         <form asp-controller="Home" asp-action="Delete" method="post">
             <div class="form-group">
-                <input type="submit" class="btn btn-default" value="Удалить" />
+                <input type="submit" class="badge-danger" value="Удалить" />
             </div>
         </form>
     </div>
 </div>
+<a href="https://localhost:44301/Home/Info">Назад</a>

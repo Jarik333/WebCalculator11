@@ -2,32 +2,41 @@
 @{
     ViewBag.Title = "Добавление операции";
 }
-<form asp-action="add" asp-controller="home">
+<h2>Добавление новой строки вычислений</h2>
+<form asp-action="Add" asp-controller="Home">
     <div class="form-group">
         <label asp-for="Expression" class="control-label"> Выражение</label>
-        <input type="text" asp-for="Expression" class="form-control" />
+        <input type="text" required asp-for="Expression" class="form-control" />
+     
     </div>
     <div class="form-group">
         <label asp-for="Result" class="control-label">Ответ</label>
-        <input type="number" asp-for="Result" class="form-control" />
+        <input type="number" required asp-for="Result" class="form-control" />
+      
     </div>
     <div class="form-group">
         <label asp-for="Date" class="control-label">Дата</label>
-        <input type="datetime" asp-for="Date" class="form-control" />
+        <input type="datetime" required asp-for="Date" class="form-control" />
+       
     </div>
     <div class="form-group">
         <label asp-for="IP" class="control-label">IP</label>
-        <input type="url" asp-for="IP" class="form-control" />
+        <input type="url" required asp-for="IP" class="form-control" />
+        
     </div>
     <div class="form-group">
         <label asp-for="Browser" class="control-label">Браузер</label>
-        <input type="text" asp-for="Browser" class="form-control" />
+        <input type="text" required asp-for="Browser" class="form-control" />
+        
     </div>
     <div class="form-group">
         <label asp-for="Error" class="control-label">Ошибка</label>
-        <input type="text" asp-for="Error" class="form-control" />
+        <input type="text" required asp-for="Error" class="form-control" />
+      
     </div>
     <div class="form-group">
-        <input type="submit" value="Добавить" class="btn btn-default" />
+        <input type="submit" value="Добавить" class="border-success" />
     </div>
 </form>
+<a href="https://localhost:44301/Home/Info">Назад</a>
+

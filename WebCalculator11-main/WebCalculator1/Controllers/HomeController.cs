@@ -191,6 +191,17 @@ namespace EFDataApp.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Info");
         }
+        public static bool Validate(Operation operation)
+        {
+            if (operation.Result.ToString().Length > 0 || operation.Error.Length > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
     }              
 }
